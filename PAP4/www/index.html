@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <title>PAP</title>  
+  
+  <link rel="stylesheet" href="lib/onsen/css/onsenui.css">  
+  <link rel="stylesheet" href="styles/onsen-css-components-blue-basic-theme.css">  
+  <link rel="stylesheet" href="css/index.css"/>
+
+  <script src="lib/onsen/js/angular/angular.js"></script>    
+  <script src="lib/onsen/js/onsenui.js"></script>    
+  
+  <script src="cordova.js"></script>  
+  <script src="js/app.js"></script>  
+  <script>
+    ons.ready(function() {
+    });
+  </script>
+
+  <style>
+  </style>
+</head>
+
+<body ng-controller="AppController">    
+<ons-sliding-menu
+		menu-page="menu.html" main-page="page1.html" side="left"
+		var="menu" type="reveal" max-slide-distance="260px" swipable="true"></ons-sliding-menu>
+
+		<ons-template id="menu.html">
+			<ons-page modifier="menu-page">
+				<ons-toolbar modifier="transparent"></ons-toolbar>
+         <br>
+				<ons-list class="menu-list">
+					<ons-list-item class="menu-item" ng-click="menu.setMainPage('page1.html', {closeMenu: true})">
+						<ons-icon icon="fa-plus"></ons-icon>
+						Home
+					</ons-list-item>
+
+					<ons-list-item class="menu-item" ng-click="menu.setMainPage('page1.html', {closeMenu: true})">
+						<ons-icon icon="fa-plus"></ons-icon>
+						PAP
+					</ons-list-item>
+
+					<ons-list-item class="menu-item" ng-click="menu.setMainPage('page3.html', {closeMenu: true})">
+						<ons-icon icon="fa-plus"></ons-icon>
+						WorkFlow
+					</ons-list-item>
+				</ons-list>
+				
+				<ons-list-item class="menu-item" ng-click="menu.setMainPage('page4.html', {closeMenu: true})">
+						<ons-icon icon="fa-bookmark"></ons-icon>
+						Mesa de trabajo
+					</ons-list-item>
+				</ons-list>
+				
+				<ons-list-item class="menu-item" ng-click="menu.setMainPage('page5.html', {closeMenu: true})">
+						<ons-icon icon="fa-bookmark"></ons-icon>
+						mBlocs
+					</ons-list-item>
+				</ons-list>
+				
+				<ons-list-item class="menu-item" ng-click="menu.setMainPage('page6.html', {closeMenu: true})">
+						<ons-icon icon="fa-bookmark"></ons-icon>
+						Ecomunicator
+					</ons-list-item>
+				</ons-list>
+			</ons-page>
+		</ons-template>
+		
+  <ons-template id="page1.html">
+  <ons-navigator>
+    <ons-page>
+      <ons-toolbar>
+      <div class="left">
+						<ons-toolbar-button ng-click="menu.toggle()">
+							<ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+						</ons-toolbar-button>
+					</div>
+        <div class="center">PAP</div>
+      </ons-toolbar>
+      <br>
+	<input type="search" class="search-input" style="width: 96%; margin: 6px auto 6px auto;" placeholder="Buscar" ng-model="entradaPAP">  					    </div>
+      <ons-list ng-controller="MasterController">
+        <ons-list-item modifier="chevron" class="item" ng-repeat="item in items | filter : entradaPAP" ng-click="showDetail(item)">
+          <ons-row>
+              <ons-col>
+              <header>
+                <span class="item-title">{{item.Nom}}</span>
+                <span class="item-label">{{item.fecha}}</span>
+				
+              </header>
+              <p class="item-desc"><strong>PAP: </strong>{{item.Titulo}}</p>
+              <p class="item-desc"><strong>Estado: </strong>{{item.Estado}}</p>
+			  <p class="item-desc"><strong>Prioridad: </strong>{{item.Prioridad}}</p>
+            </ons-col>
+          </ons-row>                          
+        </ons-list-item>
+      </ons-list>
+    </ons-page>
+  </ons-navigator>
+		</ons-template>
+  <ons-template id="detail.html">
+    <ons-page ng-controller="DetailController">
+
+      <ons-toolbar>
+        <div class="left"><ons-back-button>Back</ons-back-button></div>
+        <div class="center">Detalles</div>
+      </ons-toolbar>
+      <br>
+      <ons-list modifier="inset" style="margin-top: 10px">
+        <ons-list-item class="item">
+          <ons-row>
+            <ons-col>
+              <header>
+                <span class="item-title">{{item.Titulo}}</span>
+                <span class="item-label">{{item.nombre}}</span>
+              </header>
+			  <p class="item-desc">Porcentaje: {{item.Porcentaje}}</p>
+			  <span class="item-desc">Prioridad:{{item.Prioridad}}</span>
+            </ons-col>
+          </ons-row>
+        </ons-list-item>
+
+        <ons-list-item modifier="chevron" ng-click="doSomething()">
+          <ons-icon icon="ion-chatboxes" fixed-width="true" style="color: #ccc"></ons-icon>
+          <strong>Por: </strong>{{item.Nombre}}
+		  <span class="item-label">{{item.fecha}}</span>
+		  <span class="item-title">{{item.nombre}}</span>
+        </ons-list-item>
+      </ons-list>
+
+      <ons-list style="margin-top: 10px">
+        <ons-list-item class="item">
+          <header>
+            <p class="item-desc">{{item.fecha}}</p>
+          </header>
+          <p class="item-desc">Tiempo de desarrollo: {{item.Tiempo}}</p>
+		  <p class="item-desc">Descripción:{{item.Descripcion}}</p>
+		  <p class="item-desc">Fecha Inicial: {{item.Fechai}}</p>
+	      <span class="item-desc">Fecha final:{{item.Fechaf}}</span>
+        </ons-list-item>
+      </ons-list>
+
+      <br>
+
+    </ons-page>
+  </ons-template>
+
+</body>  
+</html>
